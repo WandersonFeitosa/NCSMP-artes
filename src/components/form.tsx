@@ -2,6 +2,28 @@ interface FormProps {
   apiUrl: string;
 }
 
+async function postUrl(url: string, data: any) {
+  const response = await fetch(url, {
+    method: "POST",
+    body: data,
+  });
+  const submitButton = document.querySelector(
+    ".form__submit"
+  ) as HTMLButtonElement;
+
+  submitButton.disabled = false;
+
+  console.log(response);
+  if (response.status != 200) {
+    const json = await response.json();
+    alert(json.error);
+    return;
+  }
+
+  alert("Imagem enviada com sucesso");
+  window.location.reload();
+}
+
 export function Form({ apiUrl }: FormProps) {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const fileInput = e.target as HTMLInputElement;
@@ -32,23 +54,10 @@ export function Form({ apiUrl }: FormProps) {
     const submitButton = document.querySelector(
       ".form__submit"
     ) as HTMLButtonElement;
-    const thumbnail = document.querySelector(
-      ".file__thumbnail"
-    ) as HTMLImageElement;
 
     submitButton.disabled = true;
 
-    fetch(`${apiUrl}/postImage`, {
-      method: "POST",
-      body: formData,
-    }).then((res) => {
-      submitButton.disabled = false;
-      if (res.status !== 200) return alert("Erro ao enviar imagem");
-      form.reset();
-      thumbnail.src = "";
-      alert("Imagem enviada com sucesso");
-      window.location.reload();
-    });
+    postUrl(`${apiUrl}/postImage`, formData);
   }
 
   return (
@@ -66,6 +75,10 @@ export function Form({ apiUrl }: FormProps) {
               pessoas se referem.
             </p>
             <p>NÃO USE SENHAS IMPORTANTES PRA VOCÊ, USA QUALQUER COISA BOBA</p>
+
+            <p>
+              Para gerar seu token, entre no servidor do discord e use o /token
+            </p>
           </div>
           <div className="form__col">
             <form id="sign-image" onSubmit={handleFormSubmit}>
@@ -86,6 +99,12 @@ export function Form({ apiUrl }: FormProps) {
                 type="text"
                 name="password"
                 placeholder="Senha para apagar a imagem"
+                required
+              />
+              <input
+                type="text"
+                name="token"
+                placeholder="Insira aqui o seu token"
                 required
               />
               <div className="form__image-input-wrapper">
