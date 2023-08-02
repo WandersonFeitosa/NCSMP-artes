@@ -90,7 +90,7 @@ export function Gallery({ apiUrl }: GalleryProps) {
                           Autor: <span>{image.author}</span>
                         </div>
                         <div className="gallery__item__author">
-                          Ennviado por: <span>{image.name}</span>
+                          Enviado por: <span>{image.name}</span>
                         </div>
                       </div>
                     </div>

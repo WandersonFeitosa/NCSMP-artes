@@ -85,7 +85,7 @@ export function Form({ apiUrl }: FormProps) {
               <input
                 type="text"
                 name="password"
-                placeholder="Coloque aqui uma senha para apagar a imagem"
+                placeholder="Senha para apagar a imagem"
                 required
               />
               <div className="form__image-input-wrapper">
