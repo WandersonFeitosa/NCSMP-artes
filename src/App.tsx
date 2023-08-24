@@ -2,7 +2,7 @@ import { Form } from "./components/form";
 import { Gallery } from "./components/gallery";
 
 function App() {
-  const apiUrl = "https://34.95.135.168";
+  const apiUrl = "https://35.202.226.223";
 
   return (
     <div>
